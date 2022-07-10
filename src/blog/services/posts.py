@@ -21,10 +21,10 @@ class PostService:
     def get(self, user_id: int, post_id: int):
         return self._get(user_id, post_id)
 
-    def get_list(self, user: Optional[int] = None):
+    def get_list(self, user_id: Optional[int] = None):
         query = self.session.query(tables.Post)
-        if user:
-            query = query(Post).filter_by(user_id=user)
+        if user_id:
+            query = query.filter_by(user_id=user_id)
         posts = query.all()
         return posts
 

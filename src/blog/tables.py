@@ -10,6 +10,7 @@ class User(Base):
     username = sa.Column(sa.Text, nullable=False)
     email = sa.Column(sa.Text, nullable=False)
     password_hash = sa.Column(sa.Text)
+    is_active = sa.Column(sa.Boolean, server_default=sa.sql.expression.true(), nullable=False)
 
     __table_args__ = (
         sa.UniqueConstraint('username'),

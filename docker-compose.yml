@@ -1,0 +1,48 @@
+version: '3.7'
+
+
+services:
+  db:
+    image: postgres:12.0-alpine
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - PGUSER=postgres
+      - PGPASSWORD=postgres
+      - PGDATABASE=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_HOST=0.0.0.0
+    expose:
+      - 5432
+
+  web:
+    build: .
+    command:
+      bash -c "alembic stamp head &&
+      alembic revision --autogenerate -m "First" &&
+      alembic upgrade head &&
+      python -m src.blog"
+    volumes:
+      - .:/usr/src/fastapi-blog
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.org
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+
+
+volumes:
+  postgres_data:

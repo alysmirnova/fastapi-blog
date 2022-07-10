@@ -1,1 +1,5 @@
-# fastapi-blog
+### fastapi-blog
+
+
+```docker-compose up --reload``` - сборка и запуск контейнера. 
+

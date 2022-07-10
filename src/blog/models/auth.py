@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel
 
 
@@ -12,6 +13,7 @@ class UserCreate(BaseUser):
 
 class User(BaseUser):
     id: int
+    is_active: Optional[bool] = True
 
     class Config:
         orm_mode = True
@@ -20,3 +22,6 @@ class User(BaseUser):
 class Token(BaseModel):
     access_token: str
     token_type: str = 'bearer'
+
+    class Config:
+        allow_population_by_field_name = True

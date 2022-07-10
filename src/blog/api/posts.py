@@ -11,12 +11,12 @@ router = APIRouter(
 )
 
 
-#@router.get('/', response_model=List[Post])
-#def get_posts(
-#        user: User = Depends(get_current_user),
-#        service: PostService = Depends(),
-#):
-#    return service.get_list(user=user)
+@router.get('/', response_model=List[Post])
+def get_posts(
+    user_id: int = None,
+    service: PostService = Depends(),
+):
+    return service.get_list(user_id)
 
 
 @router.post('/', response_model=Post)
